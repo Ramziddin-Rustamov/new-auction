@@ -24,6 +24,8 @@ class CurrentBidController extends Controller
      * summary="Return only fields ",
      * description="Get all data",
      * tags={"Current-Bid"},
+     * security={ {"jwt": {}} },
+     * 
      *       @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -58,17 +60,6 @@ class CurrentBidController extends Controller
         $currentBid = CurrentBid::all();
         return CurrentBidResource::collection($currentBid);
     }
-
-    /*
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
         
     /**
      *
@@ -77,6 +68,8 @@ class CurrentBidController extends Controller
      * summary="Post a new data",
      * description="Post new user data",
      * tags={"Current-Bid"},
+     * security={ {"jwt": {}} },
+     * 
      * 
      * @OA\RequestBody(
      *    required=true,
@@ -140,6 +133,8 @@ class CurrentBidController extends Controller
      * summary="Get one ",
      * description="Return all date related to ID{bid id}",
      * tags={"Current-Bid"},
+     * security={ {"jwt": {}} },
+     * 
      *  @OA\Parameter(name="current-bid", in="path", description="ID", required=true,
      *        @OA\Schema(type="integer")
      *    ),
@@ -164,13 +159,6 @@ class CurrentBidController extends Controller
      *      )
      * )
      */
-
-    /*
-     * Display the specified resource.
-     *
-     * @param  \App\Models\CurrentBid  $CurrentBid
-     * @return \Illuminate\Http\Response
-     */
     public function show($CurrentBid)
     {
         $CurrentBid = CurrentBid::find($CurrentBid);
@@ -180,16 +168,7 @@ class CurrentBidController extends Controller
         return $this->error;
     }
 
-    /*
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\CurrentBid  $CurrentBid
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(CurrentBid $CurrentBid)
-    {
-        //
-    }
+
 
         /**
      *  @OA\Put (
@@ -197,6 +176,7 @@ class CurrentBidController extends Controller
      *      tags={"Current-Bid"},
      *      operationId="Update current-bid price of the product",
      *      summary="Update current-bid ",
+     *      security={ {"jwt": {}} },
      *      @OA\Parameter (description="bidding current update ",in="path",name="id",
      *      required=true,example="1", 
      *       @OA\Schema(type="integer")),
@@ -250,7 +230,9 @@ class CurrentBidController extends Controller
      * summary="Get one and Delete related to Bid id",
      * description="Return  date related to ID of the Bid",
      * tags={"Current-Bid"},
+     * security={ {"jwt": {}} },
      * 
+     *  
      * *@OA\Parameter(name="current-bid", in="path", description="put bid id and try to delete ", required=true,
      *       @OA\Schema(type="integer")
      *  ),

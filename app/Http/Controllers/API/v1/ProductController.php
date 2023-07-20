@@ -27,6 +27,7 @@ class ProductController extends Controller
      * summary="Return only fields ",
      * description="Get all data",
      * tags={"Product"},
+     * security={ {"jwt": {}} },
      *       @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -62,25 +63,15 @@ class ProductController extends Controller
         return ProductResource::collection($product);
     }
 
-
-    /*
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
-    public function create()
-    {
-        //
-    }
-
-        /**
+    /**
      *
      * @OA\Post(
      * path="/v1/product",
      * summary="Post a new data",
      * description="Post new user data",
      * tags={"Product"},
+     * security={ {"jwt": {}} },
+     * 
      * 
      * @OA\RequestBody(
      *    required=true,
@@ -92,7 +83,7 @@ class ProductController extends Controller
      *       required={"user_id","name","image","bidmargin","description",},
      *       @OA\Property(property="user_id", type="number", format="text", example="1"),
      *       @OA\Property(property="name", type="text", format="text",example="Product name "),
-     *       @OA\Property(property="image", type="binary", format="binary", example="image"),
+     *       @OA\Property(property="image", type="string", format="binary", example="image"),
      *       @OA\Property(property="bidmargin", type="text", format="text", example="$8000"),
      *       @OA\Property(property="description", type="text", format="text", example="This is a product description !")
      *      )
@@ -134,10 +125,27 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function store(Request $request, ProductRequest $productRequest)
+    public function store(Request $request)
     {
-        $product =  Product::create($productRequest->validated());
-        return new ProductResponse($product);
+        $request->validate([
+            'user_id'=>['exists:users,id'],
+            'name'=>['required'],
+            'image'=>['required','mimes:png,jpg,jpeg'],
+            'bidmargin'=>['required'],
+            'description'=>['required']
+        ]);
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images', 'public');
+        }
+        $product = new Product();
+        $product->user_id = auth()->user()->id;
+        $product->name = $request->name;
+        $product->img = $imagePath ?? null;
+        $product->bidmargin = $request->bidmargin;
+        $product->description = $request->description;
+        $product->save();
+        return new ProductResource($product);
     }
     
            /**
@@ -147,6 +155,7 @@ class ProductController extends Controller
      * summary="Get one ",
      * description="Return all date related to  product id}",
      * tags={"Product"},
+     * security={ {"jwt": {}} },
      *  @OA\Parameter(name="product", in="path", description="ID", required=true,
      *        @OA\Schema(type="integer")
      *    ),
@@ -188,21 +197,12 @@ class ProductController extends Controller
         return $this->error;
     }
 
-    /*
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Product $product)
-    {
-        // 
-    }
 
             /**
      *  @OA\Put (
      *      path="/v1/product/{id}",
      *      tags={"Product"},
+     *      security={ {"jwt": {}} },
      *      operationId="Update Product price of the product",
      *      summary="Update Product ",
      *      @OA\Parameter (description="bidding current update ",in="path",name="id",
@@ -257,6 +257,7 @@ class ProductController extends Controller
      * summary="Get one and Delete related to product id",
      * description="Return  date related to ID of the Product",
      * tags={"Product"},
+     * security={ {"jwt": {}} },
      * 
      * *@OA\Parameter(name="product", in="path", description="put product id and try to delete ", required=true,
      *       @OA\Schema(type="integer")

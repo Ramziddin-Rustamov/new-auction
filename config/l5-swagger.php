@@ -200,7 +200,7 @@ return [
                 */
             ],
             'security' => [
-                'api' => [
+                'bearer' => [
                     'type' => 'http',
                     'description' => 'Authorization token obtained from logging in.',
                     'name' => 'Authorization',

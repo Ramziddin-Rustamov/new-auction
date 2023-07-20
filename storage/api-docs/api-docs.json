@@ -76,12 +76,7 @@
                     "403": {
                         "description": "Forbidden"
                     }
-                },
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
+                }
             }
         },
         "/v1/register": {
@@ -218,7 +213,59 @@
                 },
                 "security": [
                     {
-                        "bearer": []
+                        "jwt": []
+                    }
+                ]
+            }
+        },
+        "/v1/refresh": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Refresh",
+                "description": "Refresh",
+                "operationId": "0e6ac896aeae56ace43b80bf1a00c3f0",
+                "requestBody": {
+                    "description": "Refrsh Current user ",
+                    "required": true
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "jwt": []
                     }
                 ]
             }
@@ -238,7 +285,12 @@
                             "application/json": {}
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -312,7 +364,12 @@
                     "403": {
                         "description": "Forbidden"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ]
             }
         },
         "/v1/bidding-history/{bidding-history}": {
@@ -350,7 +407,12 @@
                     "403": {
                         "description": "Forbidden"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -388,7 +450,12 @@
                     "404": {
                         "description": "Resource Not Found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ]
             }
         },
         "/v1/bidding-history/{id}": {
@@ -465,7 +532,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ]
             }
         },
         "/v1/current-bid": {
@@ -483,7 +555,12 @@
                             "application/json": {}
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -557,7 +634,12 @@
                     "403": {
                         "description": "Forbidden"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ]
             }
         },
         "/v1/current-bid/{current-bid}": {
@@ -595,7 +677,12 @@
                     "403": {
                         "description": "Forbidden"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -633,7 +720,12 @@
                     "404": {
                         "description": "Resource Not Found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ]
             }
         },
         "/v1/current-bid/{id}": {
@@ -710,7 +802,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ]
             }
         },
         "/v1/product": {
@@ -728,7 +825,12 @@
                             "application/json": {}
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -762,7 +864,7 @@
                                         "example": "Product name "
                                     },
                                     "image": {
-                                        "type": "binary",
+                                        "type": "string",
                                         "format": "binary",
                                         "example": "image"
                                     },
@@ -814,7 +916,12 @@
                     "403": {
                         "description": "Forbidden"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ]
             }
         },
         "/v1/product/{product}": {
@@ -852,7 +959,12 @@
                     "403": {
                         "description": "Forbidden"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -890,7 +1002,12 @@
                     "404": {
                         "description": "Resource Not Found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ]
             }
         },
         "/v1/product/{id}": {
@@ -977,7 +1094,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ]
             }
         }
     },
@@ -994,7 +1116,7 @@
         }
     },
     "security": {
-        "api": {
+        "bearer": {
             "type": "http",
             "description": "Authorization token obtained from logging in.",
             "name": "Authorization",

@@ -20,13 +20,13 @@ Route::controller(AuthController::class)->group(function () {
 });
     
 
-    Route::middleware('api')->group(function () {
-    });
+Route::middleware('auth:jwt')->group(function () {
+    Route::resource('bidding-history',BiddingHistoryController::class);
+    Route::resource('product',ProductController::class);
+    Route::resource('currentBid',CurrentBidController::class);
     Route::controller(AuthController::class)->group(function () {
         Route::post('logout', 'logout');
         Route::post('refresh', 'refresh');
     });
-    Route::resource('bidding-history',BiddingHistoryController::class);
-    Route::resource('product',ProductController::class);
-    Route::resource('currentBid',CurrentBidController::class);
+});
     

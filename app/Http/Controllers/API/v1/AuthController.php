@@ -11,15 +11,14 @@ use App\Http\Resources\API\v1\UserResource;
 
 class AuthController extends Controller
 {
+
+    protected  $guard = 'jwt';
     
     /**
      * * * * * *  * * * *  * * * * * *
      * @OA\Post(
      * path="/v1/login",
      * summary="Post a new data",
-     *  security={
-     *         {"bearer": {}}
-     *     },
      * description="Post new University  data",
      * tags={"Auth"},
      * 
@@ -74,7 +73,7 @@ class AuthController extends Controller
         ]);
         $credentials = $request->only('email', 'password');
 
-        $token = Auth::guard('api')->attempt($credentials);
+        $token = Auth::guard($this->guard)->attempt($credentials);
         if (!$token) {
             return response()->json([
                 'status' => 'error',
@@ -82,7 +81,7 @@ class AuthController extends Controller
             ], 401);
         }
 
-        $user = Auth::guard('api')->user();
+        $user = Auth::guard($this->guard)->user();
         return response()->json([
                 'status' => 'success',
                 'user' => new UserResource($user),
@@ -162,7 +161,7 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        $token = Auth::guard('api')->login($user,true);
+        $token = Auth::guard($this->guard)->login($user,true);
 
         //   $user->sendEmailVerificationNotification();
 
@@ -183,9 +182,7 @@ class AuthController extends Controller
      * @OA\Post(
      * path="/v1/logout",
      * summary="Post a new data",
-     *  security={
-     *         {"bearer": {}}
-     *     },
+     * security={ {"jwt": {}} },
      * description="Logout  data",
      * tags={"Auth"},
      * 
@@ -224,20 +221,64 @@ class AuthController extends Controller
 
     public function logout()
     {
-        Auth::guard('api')->logout();
+        Auth::guard($this->guard)->logout();
         return response()->json([
             'status' => 'success',
             'message' => 'Successfully logged out',
         ]);
     }
 
+
+                /**
+     * * * * * *  * * * *  * * * * * *
+     * @OA\Post(
+     * path="/v1/refresh",
+     * summary="Refresh",
+     * security={ {"jwt": {}} },
+     * description="Refresh",
+     * tags={"Auth"},
+     * 
+     * @OA\RequestBody(
+     *    required=true,
+     *    description="Refrsh Current user ",
+     * ),
+     * @OA\Response(
+     *    response=422,
+     *    description="Wrong credentials response",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="The given data was invalid.")
+     *        )
+     *     ),
+     *    @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *            @OA\MediaType(
+     *             mediaType="application/json",
+     *         ),
+     *       ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     * )
+     */
+
+
     public function refresh()
     {
         return response()->json([
             'status' => 'success',
-            'user' => Auth::user(),
+            'user' => Auth::guard($this->guard)->user(),
             'authorisation' => [
-                'token' => Auth::refresh(),
+                'token' => Auth::guard($this->guard)->refresh(),
                 'type' => 'bearer',
             ]
         ]);

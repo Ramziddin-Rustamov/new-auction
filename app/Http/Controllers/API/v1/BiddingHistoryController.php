@@ -25,6 +25,8 @@ class BiddingHistoryController extends Controller
      * summary="Return only fields ",
      * description="Get all data",
      * tags={"Bidding-History"},
+     * security={ {"jwt": {}} },
+     * 
      *       @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -54,17 +56,7 @@ class BiddingHistoryController extends Controller
         return BiddingHistoryResource::collection($biddingHistory);
     }
 
-    /*
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-    
     /**
      *
      * @OA\Post(
@@ -72,6 +64,8 @@ class BiddingHistoryController extends Controller
      * summary="Post a new data",
      * description="Post new user data",
      * tags={"Bidding-History"},
+     * security={ {"jwt": {}} },
+     * 
      * 
      * @OA\RequestBody(
      *    required=true,
@@ -129,6 +123,8 @@ class BiddingHistoryController extends Controller
      * summary="Get one ",
      * description="Return all date related to ID{bid id}",
      * tags={"Bidding-History"},
+     * security={ {"jwt": {}} },
+     * 
      *  @OA\Parameter(name="bidding-history", in="path", description="ID", required=true,
      *        @OA\Schema(type="integer")
      *    ),
@@ -154,12 +150,6 @@ class BiddingHistoryController extends Controller
      * )
      */
 
-    /*
-     * Display the specified resource.
-     *
-     * @param  \App\Models\BiddingHistory  $biddingHistory
-     * @return \Illuminate\Http\Response
-     */
     public function show($biddingHistory)
     {
         $bid = BiddingHistory::find($biddingHistory);
@@ -184,6 +174,7 @@ class BiddingHistoryController extends Controller
      *  @OA\Put (
      *      path="/v1/bidding-history/{id}",
      *      tags={"Bidding-History"},
+     *      security={ {"jwt": {}} },
      *      operationId="Update",
      *      summary="Update ",
      *      @OA\Parameter (description="bidding history update ",in="path",name="id",
@@ -212,14 +203,6 @@ class BiddingHistoryController extends Controller
      * )
      * 
      */
-
-    /*
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\BiddingHistory  $biddingHistory
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request,  $biddingHistory, BiddingHistoryRequest $biddingHistoryRequest)
     {
         $updated = BiddingHistory::find($biddingHistory);
@@ -238,13 +221,15 @@ class BiddingHistoryController extends Controller
         return $this->error;
     }
 
-           /**
+     /**
      * * * * * *  * * * *  * * * * * *
      * @OA\Delete(
      * path="/v1/bidding-history/{bidding-history}",
      * summary="Get one and Delete related to Bid id",
      * description="Return  date related to ID of the Bid",
      * tags={"Bidding-History"},
+     * security={ {"jwt": {}} },
+     * 
      * 
      * *@OA\Parameter(name="bidding-history", in="path", description="put bid id and try to delete ", required=true,
      *       @OA\Schema(type="integer")
@@ -267,13 +252,6 @@ class BiddingHistoryController extends Controller
      *          description="Resource Not Found"
      *      )
      * )
-     */
-
-    /*
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\BiddingHistory  $biddingHistory
-     * @return \Illuminate\Http\Response
      */
     public function destroy($biddingHistory)
     {

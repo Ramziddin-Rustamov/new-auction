@@ -18,7 +18,7 @@ class ProductResource extends JsonResource
             'id'=>$this->id,
             'name'=>$this->name,
             'bidmargin'=>$this->bidmargin,
-            'image'=>asset($this->image),
+            'img'=>asset($this->img),
             'description'=>$this->description,
             'user'=>$this->user,
         ];
