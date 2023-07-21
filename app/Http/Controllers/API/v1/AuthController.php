@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API\v1;
 
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\VerifiesEmails;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
@@ -12,8 +14,10 @@ use App\Http\Resources\API\v1\UserResource;
 class AuthController extends Controller
 {
 
+    use VerifiesEmails;
+
     protected  $guard = 'jwt';
-    
+    public $successStatus = 200;
     /**
      * * * * * *  * * * *  * * * * * *
      * @OA\Post(
@@ -71,6 +75,7 @@ class AuthController extends Controller
             'email' => 'required|string|email',
             'password' => 'required|string',
         ]);
+        
         $credentials = $request->only('email', 'password');
 
         $token = Auth::guard($this->guard)->attempt($credentials);
@@ -80,9 +85,10 @@ class AuthController extends Controller
                 'message' => 'Unauthorized',
             ], 401);
         }
-
         $user = Auth::guard($this->guard)->user();
-        return response()->json([
+
+        if($user->email_verified_at !== NULL){
+            return response()->json([
                 'status' => 'success',
                 'user' => new UserResource($user),
                 'authorisation' => [
@@ -90,7 +96,8 @@ class AuthController extends Controller
                     'type' => 'bearer',
                 ]
             ]);
-
+        }
+        return response()->json(['error'=>'Please Verify Email'], 401);
     }
 
         /**
@@ -161,6 +168,11 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        $user->sendApiEmailVerificationNotification();
+
+        $success['message'] = 'Please confirm yourself by clicking on verify user button sent to you on your email';
+
+        return response()->json(['success'=>$success],200);
         $token = Auth::guard($this->guard)->login($user,true);
 
         //   $user->sendEmailVerificationNotification();
@@ -282,5 +294,14 @@ class AuthController extends Controller
                 'type' => 'bearer',
             ]
         ]);
+    }
+
+    public function details()
+    {
+
+    $user = Auth::user();
+
+    return response()->json(['success' => $user], $this-> successStatus);
+
     }
 }
