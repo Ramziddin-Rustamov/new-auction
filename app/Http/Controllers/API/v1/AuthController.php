@@ -97,7 +97,7 @@ class AuthController extends Controller
                 ]
             ]);
         }
-        return response()->json(['error'=>'Please Verify Email'], 401);
+        return response()->json(['error'=>'Please Verify Your Email , We should know that it is really working email ! '], 401);
     }
 
         /**
@@ -174,8 +174,6 @@ class AuthController extends Controller
 
         return response()->json(['success'=>$success],200);
         $token = Auth::guard($this->guard)->login($user,true);
-
-        //   $user->sendEmailVerificationNotification();
 
          return response()->json([
             'status' => 'success',

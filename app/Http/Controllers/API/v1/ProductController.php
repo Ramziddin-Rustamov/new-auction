@@ -10,15 +10,20 @@ use Exception;
 use Illuminate\Http\Request;
 use OpenApi\Examples\UsingRefs\ProductResponse;
 use PhpParser\Node\Stmt\TryCatch;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
+    private $user;
 
     public $error = [
         'message'=>'Not Found',
         'status'=>'error',
         'status_code'=>404
     ];
+
+  
+
      
     /**
      * * * * * *  * * * *  * * * * * *
@@ -59,7 +64,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product  = Product::paginate(10);
+        $product  = Auth::user()->product()->paginate(10);
         return ProductResource::collection($product);
     }
 
