@@ -89,7 +89,7 @@ class AuthController extends Controller
         if($user->email_verified_at !== NULL){
             return response()->json([
                 'status' => 'success',
-                'user' => new UserResource($user),
+                'user' => $user,
                 'authorisation' => [
                     'token' => $token,
                     'type' => 'bearer',
