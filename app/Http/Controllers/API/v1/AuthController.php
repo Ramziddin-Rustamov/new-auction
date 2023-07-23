@@ -16,7 +16,6 @@ class AuthController extends Controller
 
     use VerifiesEmails;
 
-    protected  $guard = 'jwt';
     public $successStatus = 200;
     /**
      * * * * * *  * * * *  * * * * * *
@@ -78,14 +77,14 @@ class AuthController extends Controller
         
         $credentials = $request->only('email', 'password');
 
-        $token = Auth::guard($this->guard)->attempt($credentials);
+        $token = Auth::guard('jwt')->attempt($credentials);
         if (!$token) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Unauthorized',
             ], 401);
         }
-        $user = Auth::guard($this->guard)->user();
+        $user = Auth::guard('jwt')->user();
 
         if($user->email_verified_at !== NULL){
             return response()->json([
@@ -173,7 +172,7 @@ class AuthController extends Controller
         $success['message'] = 'Please confirm yourself by clicking on verify user button sent to you on your email';
 
         return response()->json(['success'=>$success],200);
-        $token = Auth::guard($this->guard)->login($user,true);
+        $token = Auth::guard('jwt')->login($user,true);
 
          return response()->json([
             'status' => 'success',
@@ -231,7 +230,7 @@ class AuthController extends Controller
 
     public function logout()
     {
-        Auth::guard($this->guard)->logout();
+        Auth::guard('jwt')->logout();
         return response()->json([
             'status' => 'success',
             'message' => 'Successfully logged out',
@@ -286,9 +285,9 @@ class AuthController extends Controller
     {
         return response()->json([
             'status' => 'success',
-            'user' => Auth::guard($this->guard)->user(),
+            'user' => Auth::guard('jwt')->user(),
             'authorisation' => [
-                'token' => Auth::guard($this->guard)->refresh(),
+                'token' => Auth::guard('jwt')->refresh(),
                 'type' => 'bearer',
             ]
         ]);
