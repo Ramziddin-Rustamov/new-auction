@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+// routes/web.php
+
+Route::get('/{any}', function () {
+    return view('fallback'); // Replace 'fallback' with the name of your fallback view
+})->where('any', '.*');
+
 
 Route::get('/', function () {
     return view('welcome');
