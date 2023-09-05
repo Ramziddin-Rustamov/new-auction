@@ -270,6 +270,29 @@
                 ]
             }
         },
+        "/v1/user/products": {
+            "get": {
+                "tags": [
+                    "Auth User Information"
+                ],
+                "summary": "Return only fields ",
+                "description": "Get all data",
+                "operationId": "59171635c4d33c1303591da7ac71e5b1",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ]
+            }
+        },
         "/v1/bidding-history": {
             "get": {
                 "tags": [

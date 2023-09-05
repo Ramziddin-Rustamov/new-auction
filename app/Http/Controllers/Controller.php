@@ -40,7 +40,11 @@ use Illuminate\Routing\Controller as BaseController;
      *  description="This is Current Bid model ",
      * ),
      *  @OA\Tags(
-     *  name="Product",
+     *  name="Products",
+     *  description="This is Product model ",
+     * ),
+     *  @OA\Tags(
+     *  name="Auth User Information",
      *  description="This is Product model ",
      * ),
      * 

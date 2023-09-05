@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\v1\AuthController;
+use App\Http\Controllers\API\v1\AuthUserInformationController;
 use App\Http\Controllers\API\v1\BiddingHistoryController;
 use App\Http\Controllers\API\v1\CurrentBidController;
 use App\Http\Controllers\API\v1\ProductController;
@@ -21,6 +22,7 @@ Route::get('email/verify/{id}', [VerificationApiController::class , 'verify'])->
 Route::get('email/resend', [VerificationApiController::class , 'resend'])->name('verificationapi.resend');
 
 Route::middleware(['auth:jwt','verified'])->group(function () {
+        Route::get('user/products',[AuthUserInformationController::class,'index'])->name('auth.user.products');
         Route::resource('bidding-history',BiddingHistoryController::class);
         Route::resource('product',ProductController::class);
         Route::resource('currentBid',CurrentBidController::class);

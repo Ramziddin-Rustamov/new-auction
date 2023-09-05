@@ -64,7 +64,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product  = Auth::user()->product()->paginate(10);
+        $product  = Product::paginate(10);
         return ProductResource::collection($product);
     }
 
