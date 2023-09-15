@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthUserInformationController extends Controller
 {
+
+    private $user ;
+    public function __constract(){
+        return $this->user = Auth::user();
+    }
         /**
      * * * * * *  * * * *  * * * * * *
      * @OA\Get(
@@ -48,8 +53,9 @@ class AuthUserInformationController extends Controller
      */
     public function index()
     {
-        $authUserProduct = Auth()->product()->get();
-        return AuthUserInformationResource::collection($authUserProduct);
+        $this->user = Auth::user();
+        $products = $this->user->products;
+        return AuthUserInformationResource::collection($products);
     }
 
     /**
@@ -59,7 +65,7 @@ class AuthUserInformationController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
