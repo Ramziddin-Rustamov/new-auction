@@ -218,7 +218,7 @@ class ProductController extends Controller
      *          required=true,
      *          description="Update product",
      *          @OA\JsonContent(
-     *          required={"user_id","product_id","price"},
+     *          required={"user_id","name","image","bidmargin","description","price"},
      *        @OA\Property(property="user_id", type="number", format="text", example="1"),
      *       @OA\Property(property="name", type="text", format="text",example="Product name "),
      *       @OA\Property(property="image", type="binary", format="binary", example="image"),
@@ -298,6 +298,7 @@ class ProductController extends Controller
         $product = Product::find($product);
         if($product){
             $product->delete();
+            // return if successfull
             return response()->json([
                 'message'=>'Deleted successfully !',
                  'status'=>200

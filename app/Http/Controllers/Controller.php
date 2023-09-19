@@ -44,7 +44,7 @@ use Illuminate\Routing\Controller as BaseController;
      *  description="This is Product model ",
      * ),
      *  @OA\Tags(
-     *  name="Auth User Information",
+     *  name="Active User Products",
      *  description="This is Product model ",
      * ),
      * 

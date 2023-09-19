@@ -273,9 +273,9 @@
         "/v1/user/products": {
             "get": {
                 "tags": [
-                    "Auth User Information"
+                    "Active User Products"
                 ],
-                "summary": "Return only fields ",
+                "summary": "Return all fields ",
                 "description": "Get all data",
                 "operationId": "59171635c4d33c1303591da7ac71e5b1",
                 "responses": {
@@ -284,6 +284,277 @@
                         "content": {
                             "application/json": {}
                         }
+                    }
+                },
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ]
+            }
+        },
+        "/v1//v1/user/products/{product}": {
+            "get": {
+                "tags": [
+                    "Active User Products"
+                ],
+                "summary": "Get one ",
+                "description": "Return all date related to  product id}",
+                "operationId": "0aa9ae6a27c99d324e08254856c3a4e8",
+                "parameters": [
+                    {
+                        "name": "product",
+                        "in": "path",
+                        "description": "ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Active User Products"
+                ],
+                "summary": "Update Product ",
+                "description": "Returns updated Bid",
+                "operationId": "Updat",
+                "parameters": [
+                    {
+                        "name": "product",
+                        "in": "path",
+                        "description": "bidding current update ",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Update product",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "user_id",
+                                    "product_id",
+                                    "price"
+                                ],
+                                "properties": {
+                                    "user_id": {
+                                        "type": "number",
+                                        "format": "text",
+                                        "example": "1"
+                                    },
+                                    "name": {
+                                        "type": "text",
+                                        "format": "text",
+                                        "example": "Product name "
+                                    },
+                                    "image": {
+                                        "type": "binary",
+                                        "format": "binary",
+                                        "example": "image"
+                                    },
+                                    "bidmargin": {
+                                        "type": "text",
+                                        "format": "text",
+                                        "example": "$8000"
+                                    },
+                                    "description": {
+                                        "type": "text",
+                                        "format": "text",
+                                        "example": "This is a product description !"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bid Updated successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ]
+            }
+        },
+        "/v1//v1/user/products": {
+            "post": {
+                "tags": [
+                    "Active User Products"
+                ],
+                "summary": "Post a new data",
+                "description": "Post new user data",
+                "operationId": "af69ab7b96a75f0145d64ae02432c3ca",
+                "requestBody": {
+                    "description": "Pass Product   credentials",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "user_id",
+                                    "name",
+                                    "image",
+                                    "bidmargin",
+                                    "description"
+                                ],
+                                "properties": {
+                                    "user_id": {
+                                        "type": "number",
+                                        "format": "text",
+                                        "example": "1"
+                                    },
+                                    "name": {
+                                        "type": "text",
+                                        "format": "text",
+                                        "example": "Product name "
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "format": "binary",
+                                        "example": "image"
+                                    },
+                                    "bidmargin": {
+                                        "type": "text",
+                                        "format": "text",
+                                        "example": "$8000"
+                                    },
+                                    "description": {
+                                        "type": "text",
+                                        "format": "text",
+                                        "example": "This is a product description !"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ]
+            }
+        },
+        "/v1//user/product/{product}": {
+            "delete": {
+                "tags": [
+                    "Active User Products"
+                ],
+                "summary": "Get one and Delete related to product id",
+                "description": "Return  date related to ID of the Product",
+                "operationId": "c3e7b5b6402e5400f7b5fbb358b41f52",
+                "parameters": [
+                    {
+                        "name": "product",
+                        "in": "path",
+                        "description": "put product id and try to delete ",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
                     }
                 },
                 "security": [
@@ -1061,7 +1332,10 @@
                             "schema": {
                                 "required": [
                                     "user_id",
-                                    "product_id",
+                                    "name",
+                                    "image",
+                                    "bidmargin",
+                                    "description",
                                     "price"
                                 ],
                                 "properties": {
