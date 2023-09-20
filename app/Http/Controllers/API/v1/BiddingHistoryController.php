@@ -159,17 +159,6 @@ class BiddingHistoryController extends Controller
         return $this->error;
     }
 
-    /*
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\BiddingHistory  $biddingHistory
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(BiddingHistory $biddingHistory)
-    {
-        //
-    }
-
     /**
      *  @OA\Put (
      *      path="/v1/bidding-history/{id}",
