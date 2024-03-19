@@ -18,7 +18,7 @@ class AuthUserInformationController extends Controller
         $this->user = Auth::user(); // Get the authenticated user and store it.
     }
 
-         
+
     /**
      * * * * * *  * * * *  * * * * * *
      * @OA\Get(
@@ -26,7 +26,7 @@ class AuthUserInformationController extends Controller
      * summary="Return all fields ",
      * description="Get all data",
      * tags={"Active User Products"},
-     * security={ {"jwt": {}} },
+     * security={ {"api": {}} },
      *       @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -43,12 +43,12 @@ class AuthUserInformationController extends Controller
      *      )
      *     )
      * )
-     * 
+     *
      */
 
     public function index()
     {
-        $product = $this->user->product()->all(); 
+        $product = $this->user->product()->all();
 
         if (!$product) {
             return response()->json(['message' => 'There is no product found'], 404);
@@ -61,11 +61,11 @@ class AuthUserInformationController extends Controller
                /**
      * * * * * *  * * * *  * * * * * *
      * @OA\Get(
-     * path="/v1//v1/user/products/{product}",
+     * path="/v1/user/products/{product}",
      * summary="Get one ",
      * description="Return all date related to  product id}",
      * tags={"Active User Products"},
-     * security={ {"jwt": {}} },
+     * security={ {"api": {}} },
      *  @OA\Parameter(name="product", in="path", description="ID", required=true,
      *        @OA\Schema(type="integer")
      *    ),
@@ -109,13 +109,13 @@ class AuthUserInformationController extends Controller
         /**
      *
      * @OA\Post(
-     * path="/v1//v1/user/products",
+     * path="/v1/user/products",
      * summary="Post a new data",
      * description="Post new user data",
      * tags={"Active User Products"},
-     * security={ {"jwt": {}} },
-     * 
-     * 
+     * security={ {"api": {}} },
+     *
+     *
      * @OA\RequestBody(
      *    required=true,
      *    description="Pass Product   credentials",
@@ -188,16 +188,16 @@ class AuthUserInformationController extends Controller
     }
 
 
-    
+
             /**
      *  @OA\Put (
-     *      path="/v1//v1/user/products/{product}",
+     *      path="/v1/user/products/{product}",
      *      tags={"Active User Products"},
-     *      security={ {"jwt": {}} },
+     *      security={ {"api": {}} },
      *      operationId="Updat",
      *      summary="Update Product ",
      *      @OA\Parameter (description="bidding current update ",in="path",name="product",
-     *      required=true,example="1", 
+     *      required=true,example="1",
      *       @OA\Schema(type="integer")),
      *      description="Returns updated Bid",
      *      @OA\RequestBody(
@@ -222,7 +222,7 @@ class AuthUserInformationController extends Controller
      *      ),
 
      * )
-     * 
+     *
      */
 
 
@@ -256,16 +256,16 @@ class AuthUserInformationController extends Controller
         return new AuthUserInformationResource($product);
     }
 
-    
+
     /**
      * * * * * *  * * * *  * * * * * *
      * @OA\Delete(
-     * path="/v1//user/product/{product}",
+     * path="/v1/user/product/{product}",
      * summary="Get one and Delete related to product id",
      * description="Return  date related to ID of the Product",
      * tags={"Active User Products"},
-     * security={ {"jwt": {}} },
-     * 
+     * security={ {"api": {}} },
+     *
      * *@OA\Parameter(name="product", in="path", description="put product id and try to delete ", required=true,
      *       @OA\Schema(type="integer")
      *  ),

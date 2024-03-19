@@ -24,8 +24,16 @@ class Product extends Model
         'user_id', 'name', 'image',
         'bidmargin','description'
     ];
+    protected $casts = [
+        'created_at' => 'datetime', // This will ensure that created_at is treated as a Carbon instance
+    ];
 
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    public function currentBids()
+    {
+        return $this->hasMany(CurrentBid::class);
     }
 }

@@ -24,7 +24,7 @@ class AuthController extends Controller
      * summary="Post a new data",
      * description="Post new University  data",
      * tags={"Auth"},
-     * 
+     *
      * @OA\RequestBody(
      *    required=true,
      *    description="Pass Auth   credentials",
@@ -74,7 +74,7 @@ class AuthController extends Controller
             'email' => 'required|string|email',
             'password' => 'required|string',
         ]);
-        
+
         $credentials = $request->only('email', 'password');
 
         $token = Auth::guard('jwt')->attempt($credentials);
@@ -86,7 +86,7 @@ class AuthController extends Controller
         }
         $user = Auth::guard('jwt')->user();
 
-        if($user->email_verified_at !== NULL){
+        if($user->email_verified_at == NULL){
             return response()->json([
                 'status' => 'success',
                 'user' => $user,
@@ -106,7 +106,7 @@ class AuthController extends Controller
      * summary="Post a new data",
      * description="Post new user data",
      * tags={"Auth"},
-     * 
+     *
      * @OA\RequestBody(
      *    required=true,
      *    description="Pass Auth   credentials",
@@ -167,11 +167,11 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        $user->sendApiEmailVerificationNotification();
+        // $user->sendApiEmailVerificationNotification();
 
-        $success['message'] = 'Please confirm yourself by clicking on verify user button sent to you on your email';
+        // $success['message'] = 'Please confirm yourself by clicking on verify user button sent to you on your email';
 
-        return response()->json(['success'=>$success],200);
+        // return response()->json(['success'=>$success],200);
         $token = Auth::guard('jwt')->login($user,true);
 
          return response()->json([
@@ -185,7 +185,7 @@ class AuthController extends Controller
         ]);
     }
 
-    
+
             /**
      * * * * * *  * * * *  * * * * * *
      * @OA\Post(
@@ -194,7 +194,7 @@ class AuthController extends Controller
      * security={ {"jwt": {}} },
      * description="Logout  data",
      * tags={"Auth"},
-     * 
+     *
      * @OA\RequestBody(
      *    required=true,
      *    description="Logout ",
@@ -246,7 +246,7 @@ class AuthController extends Controller
      * security={ {"jwt": {}} },
      * description="Refresh",
      * tags={"Auth"},
-     * 
+     *
      * @OA\RequestBody(
      *    required=true,
      *    description="Refrsh Current user ",

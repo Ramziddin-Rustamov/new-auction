@@ -288,19 +288,110 @@
                 },
                 "security": [
                     {
-                        "jwt": []
+                        "api": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Active User Products"
+                ],
+                "summary": "Post a new data",
+                "description": "Post new user data",
+                "operationId": "6a4afad082569afa6408f73bf68f18ee",
+                "requestBody": {
+                    "description": "Pass Product   credentials",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "user_id",
+                                    "name",
+                                    "image",
+                                    "bidmargin",
+                                    "description"
+                                ],
+                                "properties": {
+                                    "user_id": {
+                                        "type": "number",
+                                        "format": "text",
+                                        "example": "1"
+                                    },
+                                    "name": {
+                                        "type": "text",
+                                        "format": "text",
+                                        "example": "Product name "
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "format": "binary",
+                                        "example": "image"
+                                    },
+                                    "bidmargin": {
+                                        "type": "text",
+                                        "format": "text",
+                                        "example": "$8000"
+                                    },
+                                    "description": {
+                                        "type": "text",
+                                        "format": "text",
+                                        "example": "This is a product description !"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "api": []
                     }
                 ]
             }
         },
-        "/v1//v1/user/products/{product}": {
+        "/v1/user/products/{product}": {
             "get": {
                 "tags": [
                     "Active User Products"
                 ],
                 "summary": "Get one ",
                 "description": "Return all date related to  product id}",
-                "operationId": "0aa9ae6a27c99d324e08254856c3a4e8",
+                "operationId": "9c490de76192be59002519648f721edd",
                 "parameters": [
                     {
                         "name": "product",
@@ -331,7 +422,7 @@
                 },
                 "security": [
                     {
-                        "jwt": []
+                        "api": []
                     }
                 ]
             },
@@ -421,112 +512,19 @@
                 },
                 "security": [
                     {
-                        "jwt": []
+                        "api": []
                     }
                 ]
             }
         },
-        "/v1//v1/user/products": {
-            "post": {
-                "tags": [
-                    "Active User Products"
-                ],
-                "summary": "Post a new data",
-                "description": "Post new user data",
-                "operationId": "af69ab7b96a75f0145d64ae02432c3ca",
-                "requestBody": {
-                    "description": "Pass Product   credentials",
-                    "required": true,
-                    "content": {
-                        "multipart/form-data": {
-                            "schema": {
-                                "required": [
-                                    "user_id",
-                                    "name",
-                                    "image",
-                                    "bidmargin",
-                                    "description"
-                                ],
-                                "properties": {
-                                    "user_id": {
-                                        "type": "number",
-                                        "format": "text",
-                                        "example": "1"
-                                    },
-                                    "name": {
-                                        "type": "text",
-                                        "format": "text",
-                                        "example": "Product name "
-                                    },
-                                    "image": {
-                                        "type": "string",
-                                        "format": "binary",
-                                        "example": "image"
-                                    },
-                                    "bidmargin": {
-                                        "type": "text",
-                                        "format": "text",
-                                        "example": "$8000"
-                                    },
-                                    "description": {
-                                        "type": "text",
-                                        "format": "text",
-                                        "example": "This is a product description !"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "422": {
-                        "description": "Wrong credentials response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "The given data was invalid."
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {}
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request"
-                    },
-                    "401": {
-                        "description": "Unauthenticated"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    }
-                },
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ]
-            }
-        },
-        "/v1//user/product/{product}": {
+        "/v1/user/product/{product}": {
             "delete": {
                 "tags": [
                     "Active User Products"
                 ],
                 "summary": "Get one and Delete related to product id",
                 "description": "Return  date related to ID of the Product",
-                "operationId": "c3e7b5b6402e5400f7b5fbb358b41f52",
+                "operationId": "4dc34bda80d3d30ebae1ce89a4555dc5",
                 "parameters": [
                     {
                         "name": "product",
@@ -559,7 +557,7 @@
                 },
                 "security": [
                     {
-                        "jwt": []
+                        "api": []
                     }
                 ]
             }
