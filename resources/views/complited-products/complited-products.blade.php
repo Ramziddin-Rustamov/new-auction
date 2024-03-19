@@ -4,16 +4,19 @@
 <div class="card">
     <div class="card-body">
      <div class="container">
-        <h1>All of the active products </h1>
+        <h1>Has been sold ! </h1>
     </div><section style="background-color: #eee;">
       <div class="container py-5">
         <div class="row justify-content-center mb-3">
+            @if($compilitedProducts)
+            @foreach($compilitedProducts as $product)
           <div class="col-md-12 col-xl-10">
            {{-- Beginiing --}}
 
            <div class="card shadow-0 border rounded-3">
               <div class="card-body">
                 <div class="row">
+
                   <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
 
                     <div class="bg-image hover-zoom ripple rounded ripple-surface">
@@ -81,6 +84,7 @@
                       </div>
                     </div>
                   </div>
+
                 </div>
               </div>
             </div>
@@ -93,6 +97,8 @@
               </div>
                 {{-- User Bid --}}
           </div>
+          @endforeach
+          @endif
         </div>
       </div>
     </section>

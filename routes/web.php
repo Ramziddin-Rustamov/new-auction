@@ -1,9 +1,9 @@
 <?php
 
+use App\Http\Controllers\ComplitedProductsController;
 use App\Http\Controllers\DetailsController;
-use App\Http\Controllers\InactiveProductsController;
 use App\Http\Controllers\IndexControler;
-use Egulias\EmailValidator\Result\Reason\DetailedReason;
+// use Egulias\EmailValidator\Result\Reason\DetailedReason;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -29,7 +29,7 @@ Route::get('/', [IndexControler::class,'index'])->name("index");
 Auth::routes([
     'verify'=>true
 ]);
-Route::get("/inactive-products", [InactiveProductsController::class, 'getAllInactiveProducts'])->name("inactiveProducts");
+Route::get("/inactive-products", [ComplitedProductsController::class, 'getAllInactiveProducts'])->name("inactiveProducts");
 Route::post("/post-bidmargin", [DetailsController::class, 'addBidmargin'])->name("addBidmargin");
 
 

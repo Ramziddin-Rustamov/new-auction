@@ -7,15 +7,15 @@
             <h1>All of the active products</h1>
         </div>
         <section style="background-color: #eee;">
-            <div class="container py-5">
+            <div class="container py-2">
                 <div class="row justify-content-center mb-3">
-                    <div class="col-md-12 col-xl-10">
+                    <div class="col-md-12 col-xl-12">
                         {{-- Beginning --}}
                         <div class="card shadow-0 border rounded-3">
                             <div class="card-body">
                                 <div class="row">
                                     @foreach($products as $product)
-                                    <div class="col-md-12 col-lg-6 col-xl-4 py-3 border-1 mb-4">
+                                    <div class="col-md-12 col-lg-6 col-xl-4 py-2 border-1 mb-4 border">
                                         <div class="bg-image hover-zoom ripple rounded ripple-surface">
                                             <img src="https://picsum.photos/id/{{ $product->id }}/200/300"
                                                 class="w-100 rounded" />
@@ -49,8 +49,15 @@
                                                 <a href="{{ route('view', ['id' => $product->id]) }}"
                                                     class="btn btn-primary">View</a>
                                                 <div class="my-3">
-                                                    <span class="text-primary">Started: {{ $product->start_date }}</span><br>
-                                                    <span class="text-danger">End: {{ $product->end_date }}</span><br>
+                                                    <span class="text-primary">Started: {{ $product->created_at }}</span><br>
+                                                    <span class="text-danger">End: 2 Days</span><br>
+                                                    @php
+                                                        $end_date = \Carbon\Carbon::parse($product->created_at)->addDays(2);
+                                                        $now = \Carbon\Carbon::now();
+                                                        $diff = $end_date->diffInSeconds($now);
+                                                        $remaining = $diff > 0 ? gmdate('H:i:s', $diff) : 'Auction ended';
+                                                    @endphp
+                                                    <span class="text-info">Time Left: {{ $remaining }}</span><br>
                                                 </div>
                                             </div>
                                         </div>

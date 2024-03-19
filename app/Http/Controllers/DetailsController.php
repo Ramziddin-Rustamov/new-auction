@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CurrentBid;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DetailsController extends Controller
 {
@@ -41,7 +42,7 @@ class DetailsController extends Controller
         $find->each->delete();
     } else {
         $currentBid = new CurrentBid();
-        $currentBid->user_id = 16; // Assuming 6 is the authenticated user's ID
+        $currentBid->user_id = Auth::user()->id; // Assuming 6 is the authenticated user's ID
         $currentBid->product_id = $request->product_id;
         $currentBid->price = $request->newPrice;
         $currentBid->save();

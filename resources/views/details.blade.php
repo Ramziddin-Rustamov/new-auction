@@ -5,9 +5,6 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-              <div class="card-header">
-                Active
-              </div>
               <div class="card-body">
                 <h3>All of the active products </h3>
               </div><section style="background-color: #eee;">
