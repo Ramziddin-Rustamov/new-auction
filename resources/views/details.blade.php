@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container py-2 my-2">
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
@@ -51,7 +51,6 @@
                                   <i class="fa fa-star"></i>
                                   <i class="fa fa-star"></i>
                                 </div>
-                                <span>310</span>
                               </div>
                               <div class="mt-1 mb-0 text-muted small">
                                <p>{{$product->description}}</p>
