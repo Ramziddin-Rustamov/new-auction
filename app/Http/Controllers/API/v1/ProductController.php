@@ -32,7 +32,7 @@ class ProductController extends Controller
      * summary="Return only fields ",
      * description="Get all data",
      * tags={"Product"},
-     * security={ {"jwt": {}} },
+     * security={{"jwt": {}}},
      *       @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -75,7 +75,7 @@ class ProductController extends Controller
      * summary="Post a new data",
      * description="Post new user data",
      * tags={"Product"},
-     * security={ {"jwt": {}} },
+     * security={{"jwt": {}}},
      *
      *
      * @OA\RequestBody(
@@ -160,7 +160,7 @@ class ProductController extends Controller
      * summary="Get one ",
      * description="Return all date related to  product id}",
      * tags={"Product"},
-     * security={ {"jwt": {}} },
+     * security={{"jwt": {}}},
      *  @OA\Parameter(name="product", in="path", description="ID", required=true,
      *        @OA\Schema(type="integer")
      *    ),
@@ -207,7 +207,7 @@ class ProductController extends Controller
      *  @OA\Put (
      *      path="/v1/product/{id}",
      *      tags={"Product"},
-     *      security={ {"jwt": {}} },
+     *      security={{"jwt": {}}},
      *      operationId="Update Product price of the product",
      *      summary="Update Product ",
      *      @OA\Parameter (description="bidding current update ",in="path",name="id",
@@ -262,7 +262,7 @@ class ProductController extends Controller
      * summary="Get one and Delete related to product id",
      * description="Return  date related to ID of the Product",
      * tags={"Product"},
-     * security={ {"jwt": {}} },
+     * security={{"jwt": {}}},
      *
      * *@OA\Parameter(name="product", in="path", description="put product id and try to delete ", required=true,
      *       @OA\Schema(type="integer")

@@ -191,7 +191,7 @@ class AuthController extends Controller
      * @OA\Post(
      * path="/v1/logout",
      * summary="Post a new data",
-     * security={ {"jwt": {}} },
+     * security={{"jwt": {}}},
      * description="Logout  data",
      * tags={"Auth"},
      *
@@ -243,7 +243,7 @@ class AuthController extends Controller
      * @OA\Post(
      * path="/v1/refresh",
      * summary="Refresh",
-     * security={ {"jwt": {}} },
+     * security={{"jwt": {}}},
      * description="Refresh",
      * tags={"Auth"},
      *

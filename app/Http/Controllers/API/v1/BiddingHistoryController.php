@@ -25,7 +25,7 @@ class BiddingHistoryController extends Controller
      * summary="Return only fields ",
      * description="Get all data",
      * tags={"Bidding-History"},
-     * security={ {"jwt": {}} },
+     * security={{"jwt": {}}},
      * 
      *       @OA\Response(
      *          response=200,
@@ -64,7 +64,7 @@ class BiddingHistoryController extends Controller
      * summary="Post a new data",
      * description="Post new user data",
      * tags={"Bidding-History"},
-     * security={ {"jwt": {}} },
+     * security={{"jwt": {}}},
      * 
      * 
      * @OA\RequestBody(
@@ -123,7 +123,7 @@ class BiddingHistoryController extends Controller
      * summary="Get one ",
      * description="Return all date related to ID{bid id}",
      * tags={"Bidding-History"},
-     * security={ {"jwt": {}} },
+     * security={{"jwt": {}}},
      * 
      *  @OA\Parameter(name="bidding-history", in="path", description="ID", required=true,
      *        @OA\Schema(type="integer")
@@ -163,7 +163,7 @@ class BiddingHistoryController extends Controller
      *  @OA\Put (
      *      path="/v1/bidding-history/{id}",
      *      tags={"Bidding-History"},
-     *      security={ {"jwt": {}} },
+     *      security={{"jwt": {}}},
      *      operationId="Update",
      *      summary="Update ",
      *      @OA\Parameter (description="bidding history update ",in="path",name="id",
@@ -217,7 +217,7 @@ class BiddingHistoryController extends Controller
      * summary="Get one and Delete related to Bid id",
      * description="Return  date related to ID of the Bid",
      * tags={"Bidding-History"},
-     * security={ {"jwt": {}} },
+     * security={{"jwt": {}}},
      * 
      * 
      * *@OA\Parameter(name="bidding-history", in="path", description="put bid id and try to delete ", required=true,

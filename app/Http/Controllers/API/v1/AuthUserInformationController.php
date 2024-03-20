@@ -11,13 +11,7 @@ use App\Product;
 
 class AuthUserInformationController extends Controller
 {
-    private $user;
-
-    public function __construct()
-    {
-        $this->user = Auth::user(); // Get the authenticated user and store it.
-    }
-
+   
 
     /**
      * * * * * *  * * * *  * * * * * *
@@ -26,7 +20,7 @@ class AuthUserInformationController extends Controller
      * summary="Return all fields ",
      * description="Get all data",
      * tags={"Active User Products"},
-     * security={ {"api": {}} },
+     * security={{"jwt": {}}},
      *       @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -46,15 +40,15 @@ class AuthUserInformationController extends Controller
      *
      */
 
-    public function index()
-    {
-        $product = $this->user->product()->all();
-
-        if (!$product) {
-            return response()->json(['message' => 'There is no product found'], 404);
-        }
-
-        return new AuthUserInformationResource($product);
+     public function index()
+     {
+         $products = auth()->user()->products()->get();
+     
+         if ($products->isEmpty()) {
+             return response()->json(['message' => 'There are no products found for this user'], 404);
+         }
+     
+         return AuthUserInformationResource::collection($products);
     }
 
 
@@ -65,7 +59,7 @@ class AuthUserInformationController extends Controller
      * summary="Get one ",
      * description="Return all date related to  product id}",
      * tags={"Active User Products"},
-     * security={ {"api": {}} },
+     * security={{"jwt": {}}},
      *  @OA\Parameter(name="product", in="path", description="ID", required=true,
      *        @OA\Schema(type="integer")
      *    ),
@@ -96,7 +90,7 @@ class AuthUserInformationController extends Controller
 
     public function show($id)
     {
-        $product = $this->user->product()->find($id); // Find the product by ID associated with the user.
+        $product =  auth()->user()->products()->find($id); // Find the product by ID associated with the user.
 
         if (!$product) {
             return response()->json(['message' => 'Product not found'], 404);
@@ -113,7 +107,7 @@ class AuthUserInformationController extends Controller
      * summary="Post a new data",
      * description="Post new user data",
      * tags={"Active User Products"},
-     * security={ {"api": {}} },
+     * security={{"jwt": {}}},
      *
      *
      * @OA\RequestBody(
@@ -193,7 +187,7 @@ class AuthUserInformationController extends Controller
      *  @OA\Put (
      *      path="/v1/user/products/{product}",
      *      tags={"Active User Products"},
-     *      security={ {"api": {}} },
+     *      security={{"jwt": {}}},
      *      operationId="Updat",
      *      summary="Update Product ",
      *      @OA\Parameter (description="bidding current update ",in="path",name="product",
@@ -229,7 +223,7 @@ class AuthUserInformationController extends Controller
 
     public function update(ProductRequest $request, $id)
     {
-        $product = $this->user->product()->find($id);
+        $product =  auth()->user()->products()->find($id);
 
         if (!$product) {
             return response()->json(['message' => 'Product not found'], 404);
@@ -264,7 +258,7 @@ class AuthUserInformationController extends Controller
      * summary="Get one and Delete related to product id",
      * description="Return  date related to ID of the Product",
      * tags={"Active User Products"},
-     * security={ {"api": {}} },
+     * security={{"jwt": {}}},
      *
      * *@OA\Parameter(name="product", in="path", description="put product id and try to delete ", required=true,
      *       @OA\Schema(type="integer")
@@ -292,7 +286,7 @@ class AuthUserInformationController extends Controller
 
     public function destroy($id)
     {
-        $product = $this->user->product()->find($id);
+        $product =  auth()->user()->products()->find($id);
 
         if (!$product) {
             return response()->json(['message' => 'Product not found'], 404);
