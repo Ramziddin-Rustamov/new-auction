@@ -78,7 +78,7 @@
                                 <form id="bidMarginForm" action="{{ route('addBidmargin') }}" method="POST">
                                     @csrf
                                     <div class="form-group">
-                                        <input class="form-control" type="text" name="newPrice" placeholder="Enter new price">
+                                        <input class="form-control" type="number" name="newPrice" placeholder="Enter new price">
                                         <input class="form-control" type="hidden" name="product_id" value="{{$product->id}}">
                                     </div>
                                     <button class="btn btn-outline-primary btn-sm mt-2" type="submit">
