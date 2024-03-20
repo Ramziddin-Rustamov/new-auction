@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\v1\ProductController;
 use App\Http\Controllers\ComplitedProductsController;
 use App\Http\Controllers\DetailsController;
 use App\Http\Controllers\IndexControler;
@@ -29,10 +30,16 @@ Route::get('/', [IndexControler::class,'index'])->name("index");
 Auth::routes([
     'verify'=>true
 ]);
-Route::get("/inactive-products", [ComplitedProductsController::class, 'getAllInactiveProducts'])->name("inactiveProducts");
+Route::middleware(['auth'])->group(function () {
 Route::post("/post-bidmargin", [DetailsController::class, 'addBidmargin'])->name("addBidmargin");
-
-
-
 Route::get("/view/{id}", [DetailsController::class, 'view'])->name("view");
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified');
+// Route to display product index page
+// Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+
+// // Route to display product creation page
+// Route::get('/products/create', [ProductController::class, 'store'])->name('products.create');
+
+// // Route to display product view page
+// Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.view');
+});

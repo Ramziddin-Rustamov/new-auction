@@ -41,10 +41,6 @@
                                                 <h4 class="mb-1 me-1">${{ $product->bidmargin }}</h4>
                                                 <span class="text-danger"><s>${{ $product->bidmargin * 2 }}</s></span>
                                             </div>
-                                            <h6 class="text-success">Last price</h6>
-                                            <div class="d-flex flex-row align-items-center">
-                                                <h4 class="mb-1 me-1 text-danger">${{ $product->currentBid ? $product->currentBid->price : $product->bidmargin }}</h4>
-                                            </div>
                                             <div class="d-flex flex-column mt-3">
                                                 <a href="{{ route('view', ['id' => $product->id]) }}"
                                                     class="btn btn-primary">View</a>

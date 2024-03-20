@@ -10,19 +10,14 @@ use Illuminate\Support\Facades\Auth;
 
 class DetailsController extends Controller
 {
-    // public function view($id){
-    //     $currentBid  = CurrentBid::where("product_id",$id)->get();
-    //     return view("details",[
-    //         "currentBid" =>$currentBid
-    //     ]);
-    // }
+
 
     public function view($id){
 
 
         $product = Product::findOrFail($id);
 
-        $currentBids = $product->currentBids;
+        $currentBids = $product->currentBids->sortByDesc('price');
         return view("details",[
             "currentBids" =>$currentBids,
             "product" =>$product,
@@ -39,15 +34,13 @@ class DetailsController extends Controller
                 return redirect()->back()->with('error', 'Price is equal or less than the last offer price!');
             }
         }
-        $find->each->delete();
-    } else {
-        $currentBid = new CurrentBid();
-        $currentBid->user_id = Auth::user()->id; // Assuming 6 is the authenticated user's ID
-        $currentBid->product_id = $request->product_id;
-        $currentBid->price = $request->newPrice;
-        $currentBid->save();
-        return redirect()->back()->with('success', 'Bid margin added successfully.');
     }
+    $currentBid = new CurrentBid();
+    $currentBid->user_id =  1;//Auth::user()->id;
+    $currentBid->product_id = $request->product_id;
+    $currentBid->price = $request->newPrice;
+    $currentBid->save();
+    return redirect()->back()->with('success', 'Offer added!');
   }
 
 }

@@ -22,9 +22,9 @@ class ProductController extends Controller
         'status_code'=>404
     ];
 
-  
 
-     
+
+
     /**
      * * * * * *  * * * *  * * * * * *
      * @OA\Get(
@@ -49,7 +49,7 @@ class ProductController extends Controller
      *      )
      *     )
      * )
-     * 
+     *
      */
     /*
      * Display a listing of the resource.
@@ -64,8 +64,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product  = Product::paginate(10);
-        return ProductResource::collection($product);
+        $products = Product::orderBy("id", 'DESC')->get();
+        return ProductResource::collection($products);
     }
 
     /**
@@ -76,8 +76,8 @@ class ProductController extends Controller
      * description="Post new user data",
      * tags={"Product"},
      * security={ {"jwt": {}} },
-     * 
-     * 
+     *
+     *
      * @OA\RequestBody(
      *    required=true,
      *    description="Pass Product   credentials",
@@ -152,7 +152,7 @@ class ProductController extends Controller
         $product->save();
         return new ProductResource($product);
     }
-    
+
            /**
      * * * * * *  * * * *  * * * * * *
      * @OA\Get(
@@ -211,7 +211,7 @@ class ProductController extends Controller
      *      operationId="Update Product price of the product",
      *      summary="Update Product ",
      *      @OA\Parameter (description="bidding current update ",in="path",name="id",
-     *      required=true,example="1", 
+     *      required=true,example="1",
      *       @OA\Schema(type="integer")),
      *      description="Returns updated Bid",
      *      @OA\RequestBody(
@@ -236,7 +236,7 @@ class ProductController extends Controller
      *      ),
 
      * )
-     * 
+     *
      */
     /*
      * Update the specified resource in storage.
@@ -263,7 +263,7 @@ class ProductController extends Controller
      * description="Return  date related to ID of the Product",
      * tags={"Product"},
      * security={ {"jwt": {}} },
-     * 
+     *
      * *@OA\Parameter(name="product", in="path", description="put product id and try to delete ", required=true,
      *       @OA\Schema(type="integer")
      *  ),
