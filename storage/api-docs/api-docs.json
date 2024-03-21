@@ -1400,12 +1400,12 @@
     },
     "components": {
         "securitySchemes": {
-            "api": {
+            "jwt": {
                 "type": "http",
                 "description": "Login with email and password to get the authentication token",
                 "name": "Token based Based",
                 "in": "header",
-                "bearerFormat": "JWT",
+                "bearerFormat": "jwt",
                 "scheme": "bearer"
             }
         }

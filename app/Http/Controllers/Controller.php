@@ -22,8 +22,8 @@ use Illuminate\Routing\Controller as BaseController;
      *     name="Token based Based",
      *     in="header",
      *     scheme="bearer",
-     *     bearerFormat="JWT",
-     *     securityScheme="api",
+     *     bearerFormat="jwt",
+     *     securityScheme="jwt",
      * ),
      *
      *

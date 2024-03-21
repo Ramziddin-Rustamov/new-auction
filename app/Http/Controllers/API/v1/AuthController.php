@@ -167,11 +167,11 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        // $user->sendApiEmailVerificationNotification();
+        $user->sendApiEmailVerificationNotification();
 
-        // $success['message'] = 'Please confirm yourself by clicking on verify user button sent to you on your email';
+        $success['message'] = 'Please confirm yourself by clicking on verify user button sent to you on your email';
 
-        // return response()->json(['success'=>$success],200);
+        return response()->json(['success'=>$success],200);
         $token = Auth::guard('jwt')->login($user,true);
 
          return response()->json([
