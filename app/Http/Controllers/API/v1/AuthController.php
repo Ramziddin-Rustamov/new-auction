@@ -86,7 +86,7 @@ class AuthController extends Controller
         }
         $user = Auth::guard('jwt')->user();
 
-        if($user->email_verified_at == NULL){
+        if($user->email_verified_at != NULL){
             return response()->json([
                 'status' => 'success',
                 'user' => $user,
