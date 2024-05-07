@@ -18,7 +18,7 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     protected $Apinamespace = 'App\\Http\\Controllers\\API';
-    public const HOME = '/index';
+    public const HOME = '/';
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
