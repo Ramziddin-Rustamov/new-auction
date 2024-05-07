@@ -16,7 +16,7 @@ Route::get('email/resend', [VerificationApiController::class , 'resend'])->name(
 Auth::routes([
     'verify'=>true
 ]);
-Route::middleware(['auth:jwt'])->group(function () {
+Route::middleware(['auth'])->group(function () {
 Route::post("/post-bidmargin", [DetailsController::class, 'addBidmargin'])->name("addBidmargin");
 Route::get("/view/{id}", [DetailsController::class, 'view'])->name("view");
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified');
