@@ -40,7 +40,7 @@
                             <a class="nav-link" href="{{url('/')}}">All</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/api/docs">API</a>
+                            <a class="nav-link" href="/api/docs"></a>
                         </li>
                         <!-- Authentication Links -->
                         @guest

@@ -110,7 +110,7 @@ class BiddingHistoryController extends Controller
      * )
      */
 
-    public function store(Request $request, BiddingHistoryRequest $biddingHistoryRequest)
+    public function store(BiddingHistoryRequest $biddingHistoryRequest)
     {
         $biddingHistory = BiddingHistory::create($biddingHistoryRequest->validated());
         return $biddingHistory;

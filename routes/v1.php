@@ -21,7 +21,7 @@ Route::controller(AuthController::class)->group(function () {
 Route::get('email/verify/{id}', [VerificationApiController::class , 'verify'])->name('verificationapi.verify');
 Route::get('email/resend', [VerificationApiController::class , 'resend'])->name('verificationapi.resend');
 // ,'verified'
-Route::middleware(['auth:jwt','verified'])->group(function () {
+Route::middleware(['auth:jwt'])->group(function () {
         Route::get('user/products',[AuthUserInformationController::class,'index'])->name('auth.user.products');
         Route::resource('bidding-history',BiddingHistoryController::class);
         Route::resource('product',ProductController::class);

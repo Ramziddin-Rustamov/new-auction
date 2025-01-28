@@ -7,11 +7,16 @@ use App\Http\Resources\API\v1\AuthUserInformationResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\API\v1\ProductRequest;
+use App\Models\Product as ModelsProduct;
 use App\Product;
 
 class AuthUserInformationController extends Controller
 {
-   
+    private $user;
+   public function __construct()
+    {
+        $this->user = Auth::guard('jwt')->user();
+    }
 
     /**
      * * * * * *  * * * *  * * * * * *
@@ -42,8 +47,7 @@ class AuthUserInformationController extends Controller
 
      public function index()
      {
-         $products = auth()->user()->products()->get();
-     
+         $products = ModelsProduct::where('user_id', $this->user->id)->get();
          if ($products->isEmpty()) {
              return response()->json(['message' => 'There are no products found for this user'], 404);
          }
@@ -90,8 +94,7 @@ class AuthUserInformationController extends Controller
 
     public function show($id)
     {
-        $product =  auth()->user()->products()->find($id); // Find the product by ID associated with the user.
-
+        $product = ModelsProduct::where('user_id', $this->user->id)->find($id);
         if (!$product) {
             return response()->json(['message' => 'Product not found'], 404);
         }
@@ -168,7 +171,7 @@ class AuthUserInformationController extends Controller
             $imagePath = $request->file('image')->store('images', 'public');
         }
 
-        $product = new Product([
+        $product = new ModelsProduct([
             'user_id' => $this->user->id,
             'name' => $request->input('name'),
             'image' => $imagePath ?? null,
@@ -223,7 +226,7 @@ class AuthUserInformationController extends Controller
 
     public function update(ProductRequest $request, $id)
     {
-        $product =  auth()->user()->products()->find($id);
+        $product = ModelsProduct::where('user_id', $this->user->id)->find($id);
 
         if (!$product) {
             return response()->json(['message' => 'Product not found'], 404);
@@ -286,8 +289,7 @@ class AuthUserInformationController extends Controller
 
     public function destroy($id)
     {
-        $product =  auth()->user()->products()->find($id);
-
+        $product = ModelsProduct::where('user_id', $this->user->id)->find($id);
         if (!$product) {
             return response()->json(['message' => 'Product not found'], 404);
         }

@@ -7,39 +7,15 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-// use Illuminate\Auth\Notifications\VerifyEmail;
-// use Illuminate\Notifications\Messages\MailMessage;
-// use Illuminate\Support\Facades\URL;
 use Laravel\Sanctum\HasApiTokens;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use App\Notifications\VerifyApiEmail;
 
 
-class User extends Authenticatable implements JWTSubject , MustVerifyEmail
+class User extends Authenticatable implements JWTSubject
 {
-    use HasApiTokens, HasFactory, Notifiable;
 
-
-    public function getCreatedAtAttribute($value)
-    {
-        return Carbon::parse($value)->format('Y-m-d H:i:s');
-    }
-
-    public function getUpdatedAtAttribute($value)
-    {
-        return Carbon::parse($value)->format('Y-m-d H:i:s');
-    }
-
-    // Email verification function 
-
-    public function sendApiEmailVerificationNotification()
-
-    {
-
-       $this->notify(new VerifyApiEmail); // my notification
-
-    }
-    /**
+  /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -70,6 +46,17 @@ class User extends Authenticatable implements JWTSubject , MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+
+    public function getCreatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d H:i:s');
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d H:i:s');
+    }
+  
     public function getJWTIdentifier()
     {
         return $this->getKey();
