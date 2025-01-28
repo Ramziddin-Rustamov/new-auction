@@ -14,8 +14,6 @@ use App\Http\Resources\API\v1\UserResource;
 class AuthController extends Controller
 {
 
-    use VerifiesEmails;
-
     public $successStatus = 200;
     /**
      * * * * * *  * * * *  * * * * * *
@@ -85,18 +83,14 @@ class AuthController extends Controller
             ], 401);
         }
         $user = Auth::guard('jwt')->user();
-
-        if($user->email_verified_at != NULL){
-            return response()->json([
-                'status' => 'success',
-                'user' => $user,
-                'authorisation' => [
-                    'token' => $token,
-                    'type' => 'bearer',
-                ]
-            ]);
-        }
-        return response()->json(['error'=>'Please Verify Your Email , We should know that it is really working email ! '], 401);
+        return response()->json([
+            'status' => 'success',
+            'user' => $user,
+            'authorisation' => [
+                'token' => $token,
+                'type' => 'bearer',
+            ]
+        ]);
     }
 
         /**
@@ -167,13 +161,13 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        $user->sendApiEmailVerificationNotification();
+        // $user->sendApiEmailVerificationNotification();
 
-        $success['message'] = 'Please confirm yourself by clicking on verify user button sent to you on your email';
+        // $success['message'] = 'Please confirm yourself by clicking on verify user button sent to you on your email';
 
-        return response()->json(['success'=>$success],200);
-        $token = Auth::guard('jwt')->login($user,true);
-
+        // return response()->json(['success'=>$success],200);
+        
+        $token = Auth::guard('jwt')->login($user);
          return response()->json([
             'status' => 'success',
             'message' => 'User created successfully',

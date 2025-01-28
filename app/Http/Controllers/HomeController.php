@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\BiddingHistory;
+use App\Models\CurrentBid;
+use App\Models\Product;
 
 class HomeController extends Controller
 {
+
+
    
     public function __construct()
     {
@@ -13,7 +17,12 @@ class HomeController extends Controller
     }
     public function index()
     {
-        return view("home");
+        $myproducts = Product::where('user_id',auth()->user()->id)->get();
+        $myproductBid = BiddingHistory::where('user_id',auth()->user()->id)->with(["product","user"])->get();
+        return view("home",[
+            "myproducts" => $myproducts,
+            "myproductBid" => $myproductBid
+        ]);
     }
 
   

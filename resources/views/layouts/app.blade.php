@@ -40,7 +40,7 @@
                             <a class="nav-link" href="{{url('/')}}">All</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/api/docs"></a>
+                            <a class="nav-link" href="/api/docs">API FOR APP</a>
                         </li>
                         <!-- Authentication Links -->
                         @guest
@@ -71,6 +71,10 @@
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
+
+                                    <a class="dropdown-item" href="{{ route('home') }}">
+                                        {{ __('Home') }}
+                                    </a>
                                 </div>
                             </li>
                         @endguest
