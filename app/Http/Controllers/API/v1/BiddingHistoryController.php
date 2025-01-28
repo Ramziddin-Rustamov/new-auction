@@ -8,6 +8,7 @@ use App\Http\Requests\API\v1\BiddingHistoryRequest;
 use App\Http\Resources\API\V1\BiddingHistoryResource;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BiddingHistoryController extends Controller
 {
@@ -17,6 +18,14 @@ class BiddingHistoryController extends Controller
         'status'=>'error',
         'status_code'=>404
     ];
+
+    private $user;
+
+
+    public function __construct()
+    {
+        $this->user = Auth::guard('jwt')->user();
+    }
 
      /**
      * * * * * *  * * * *  * * * * * *
@@ -52,7 +61,7 @@ class BiddingHistoryController extends Controller
      */
     public function index()
     {
-        $biddingHistory = BiddingHistory::paginate(10);
+        $biddingHistory = BiddingHistory::where('user_id',$this->user->id)->with('product')->paginate(10);
         return BiddingHistoryResource::collection($biddingHistory);
     }
 
@@ -112,8 +121,10 @@ class BiddingHistoryController extends Controller
 
     public function store(BiddingHistoryRequest $biddingHistoryRequest)
     {
-        $biddingHistory = BiddingHistory::create($biddingHistoryRequest->validated());
-        return $biddingHistory;
+        $data = $biddingHistoryRequest->validated();
+        $data['user_id'] = $this->user->id;
+        $biddingHistory = BiddingHistory::create($data);
+        return new BiddingHistoryResource($biddingHistory);
     }
 
        /**
@@ -152,7 +163,7 @@ class BiddingHistoryController extends Controller
 
     public function show($biddingHistory)
     {
-        $bid = BiddingHistory::find($biddingHistory);
+        $bid = BiddingHistory::where('user_id',$this->user->id)->with('product')->find($biddingHistory);
         if($bid){
             return new BiddingHistoryResource($bid);
         }
@@ -194,7 +205,7 @@ class BiddingHistoryController extends Controller
      */
     public function update(Request $request,  $biddingHistory, BiddingHistoryRequest $biddingHistoryRequest)
     {
-        $updated = BiddingHistory::find($biddingHistory);
+        $updated = BiddingHistory::where('user_id',$this->user->id)->with('product')->find($biddingHistory);
         if($updated){
         if($biddingHistoryRequest->validated()){
             $updated->user_id = $request->user_id;
@@ -245,7 +256,7 @@ class BiddingHistoryController extends Controller
     public function destroy($biddingHistory)
     {
       try{
-        $delete = BiddingHistory::find($biddingHistory);
+        $delete = BiddingHistory::where('user_id',$this->user->id)->with('product')->find($biddingHistory);
         if($delete){
             $delete->delete();
             return response()->json([

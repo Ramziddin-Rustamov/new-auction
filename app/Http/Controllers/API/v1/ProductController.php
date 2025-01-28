@@ -8,22 +8,23 @@ use App\Http\Requests\API\v1\ProductRequest;
 use App\Http\Resources\API\V1\ProductResource;
 use Exception;
 use Illuminate\Http\Request;
-use OpenApi\Examples\UsingRefs\ProductResponse;
-use PhpParser\Node\Stmt\TryCatch;
 use Illuminate\Support\Facades\Auth;
+use OpenApi\Examples\UsingRefs\ProductResponse;
 
 class ProductController extends Controller
 {
     private $user;
+
+    public function __construct()
+    {
+        $this->user = Auth::guard('jwt')->user();
+    }
 
     public $error = [
         'message'=>'Not Found',
         'status'=>'error',
         'status_code'=>404
     ];
-
-
-
 
     /**
      * * * * * *  * * * *  * * * * * *
@@ -64,7 +65,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::orderBy("id", 'DESC')->get();
+        $products = Product::where('user_id', $this->user->id)->orderBy("id", 'DESC')->get();
         return ProductResource::collection($products);
     }
 
@@ -144,7 +145,7 @@ class ProductController extends Controller
             $imagePath = $request->file('image')->store('images', 'public');
         }
         $product = new Product();
-        $product->user_id = auth()->user()->id;
+        $product->user_id = $this->user->id;
         $product->name = $request->name;
         $product->img = $imagePath ?? null;
         $product->bidmargin = $request->bidmargin;
@@ -195,7 +196,7 @@ class ProductController extends Controller
      */
     public function show($product)
     {
-        $product = Product::find($product);
+        $product = Product::where('user_id', $this->user->id)->find($product);
         if($product){
             return new ProductResource($product);
         }
@@ -245,12 +246,12 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,  $product,ProductRequest $productRequest)
+    public function update($product,  ProductRequest $productRequest)
     {
-        $product = Product::find($product);
+        $product = Product::where('user_id', $this->user->id)->find($product);
         if($product){
             $product->update($productRequest->validated());
-            return new ProductResponse($product);
+            return new ProductResource($product);
         }
         return $this->error;
     }
@@ -295,10 +296,9 @@ class ProductController extends Controller
     public function destroy($product)
     {
         try{
-        $product = Product::find($product);
+        $product = Product::where('user_id', $this->user->id)->find($product);
         if($product){
             $product->delete();
-            // return if successfull
             return response()->json([
                 'message'=>'Deleted successfully !',
                  'status'=>200

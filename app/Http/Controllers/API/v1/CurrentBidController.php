@@ -8,6 +8,7 @@ use App\Http\Requests\API\v1\CurrentBidRequest;
 use App\Http\Resources\API\V1\CurrentBidResource;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CurrentBidController extends Controller
 {
@@ -16,6 +17,13 @@ class CurrentBidController extends Controller
         'status'=>'error',
         'status_code'=>404
     ];
+
+    private $user;
+
+    public function __construct()
+    {
+        $this->user = Auth::guard('jwt')->user();
+    }
     
     /**
      * * * * * *  * * * *  * * * * * *
@@ -57,7 +65,7 @@ class CurrentBidController extends Controller
      */
     public function index()
     {
-        $currentBid = CurrentBid::all();
+        $currentBid = CurrentBid::where('user_id', $this->user->id)->all();
         return CurrentBidResource::collection($currentBid);
     }
         
@@ -122,7 +130,9 @@ class CurrentBidController extends Controller
      */
     public function store(Request $request, CurrentBidRequest $currentBidRequest)
     {
-        $bid = CurrentBid::create($currentBidRequest->validated());
+        $currentBidRequest->validated();
+        $currentBidRequest['user_id'] = $this->user->id;
+        $bid = CurrentBid::create($currentBidRequest->all());
         return new CurrentBidResource($bid);
     }
 
@@ -161,7 +171,7 @@ class CurrentBidController extends Controller
      */
     public function show($CurrentBid)
     {
-        $CurrentBid = CurrentBid::find($CurrentBid);
+        $CurrentBid = CurrentBid::where('user_id', $this->user->id)->find($CurrentBid);
         if($CurrentBid){
             return new CurrentBidResource($CurrentBid);
         }
@@ -215,7 +225,7 @@ class CurrentBidController extends Controller
      */
     public function update(Request $request, $CurrentBid , CurrentBidRequest $currentBidRequest)
     {
-        $currentBid = CurrentBid::find($CurrentBid);
+        $currentBid = CurrentBid::where('user_id', $this->user->id)->find($CurrentBid);
         if($currentBid){
             $currentBid->update($currentBidRequest->validated());
             return new CurrentBidResource($currentBid);
@@ -264,7 +274,7 @@ class CurrentBidController extends Controller
     public function destroy($CurrentBid)
     {
         try{
-            $currentBid = CurrentBid::find($CurrentBid);
+            $currentBid = CurrentBid::where('id', $this->user->id)->find($CurrentBid);
             if($currentBid){
                 $currentBid->delete();
                 return response()->json([
