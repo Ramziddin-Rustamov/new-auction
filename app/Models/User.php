@@ -14,7 +14,7 @@ use App\Notifications\VerifyApiEmail;
 
 class User extends Authenticatable implements JWTSubject
 {
-
+  use HasFactory;
   /**
      * The attributes that are mass assignable.
      *

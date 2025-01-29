@@ -18,11 +18,11 @@ class ProductFactory extends Factory
     public function definition()
     {
         return [
-            'user_id'=>User::all()->random()->id,
-            'name'=>$this->faker->name(),
-            'img'=>$this->faker->name(),
-            'bidmargin'=>$this->faker->numberBetween(10000,20000),
-            'description'=>$this->faker->paragraph(2)
+            'user_id' => User::factory(),
+            'name' => $this->faker->word(), 
+            'img' => $this->faker->imageUrl(), 
+            'bidmargin' => $this->faker->numberBetween(10000, 20000),
+            'description' => $this->faker->paragraph(2),
         ];
     }
 }

@@ -19,9 +19,9 @@ class CurrentBidFactory extends Factory
     public function definition()
     {
         return [
-            'user_id'=>User::all()->random()->id,
-            'product_id'=>Product::all()->random()->id,
-            'price'=>$this->faker->numberBetween(1000,2000)
+            'product_id' => Product::factory(),
+            'user_id' => User::factory(),
+            'price' => $this->faker->numberBetween(50, 500),
         ];
     }
 }

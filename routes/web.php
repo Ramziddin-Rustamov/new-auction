@@ -2,8 +2,6 @@
 
 use App\Http\Controllers\API\v1\ProductController;
 use App\Http\Controllers\API\v1\VerificationApiController;
-use App\Http\Controllers\Auth\VerificationController;
-use App\Http\Controllers\ComplitedProductsController;
 use App\Http\Controllers\DetailsController;
 use App\Http\Controllers\IndexControler;
 use Illuminate\Support\Facades\Auth;
@@ -20,4 +18,10 @@ Route::middleware(['auth'])->group(function () {
 Route::post("/post-bidmargin", [DetailsController::class, 'addBidmargin'])->name("addBidmargin");
 Route::get("/view/{id}", [DetailsController::class, 'view'])->name("view");
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified');
+
+
+//   for test case 
+Route::get('/product/{id}', [DetailsController::class, 'view'])->name('product.details');
+Route::post('/product/add-bid-margin', [DetailsController::class, 'addBidmargin'])->name('product.addBidMargin');
+
 });
