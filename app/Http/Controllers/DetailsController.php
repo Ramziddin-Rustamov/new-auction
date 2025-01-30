@@ -36,7 +36,7 @@ class DetailsController extends Controller
         }
     }
     $currentBid = new CurrentBid();
-    $currentBid->user_id =  1;//Auth::user()->id;
+    $currentBid->user_id =  Auth::user()->id;
     $currentBid->product_id = $request->product_id;
     $currentBid->price = $request->newPrice;
     $currentBid->save();

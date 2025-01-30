@@ -18,7 +18,7 @@ class HomeController extends Controller
     public function index()
     {
         $myproducts = Product::where('user_id',auth()->user()->id)->get();
-        $myproductBid = BiddingHistory::where('user_id',auth()->user()->id)->with(["product","user"])->get();
+        $myproductBid = CurrentBid::where('user_id',auth()->user()->id)->with(["product","user"])->get();
         return view("home",[
             "myproducts" => $myproducts,
             "myproductBid" => $myproductBid
