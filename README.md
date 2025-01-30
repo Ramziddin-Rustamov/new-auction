@@ -72,7 +72,7 @@ php artisan test
 API Endpoints
 
 Some of the main API routes include:
-
+Please visit to https://http://127.0.0.1:8000/api/docs to see our swagger docsumentation .
 API Routes
 
 Authentication
