@@ -1,4 +1,4 @@
-DONE By Ramziddin Rustamov , ALikhan Khasanxonov , Khusan Khukumov , Erali Choriev.
+DONE By Ramziddin Rustamov  back end Developer ,Alikhon Hasankhonov for web front end  , Khusan Khukumov for mobile App , Erali Choriev designer.
 
 Auction Bidding System
 This is an auction bidding system built with Laravel. Users can create products, place bids, and track their bidding history.
